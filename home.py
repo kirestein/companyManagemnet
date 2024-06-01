@@ -3,6 +3,7 @@ from settings import *
 import tkinter as tk
 import tkinter.messagebox
 import requests
+import locale
 # import tkcalendar as cal
 from tkcalendar import Calendar, DateEntry
 try:
@@ -13,6 +14,7 @@ except:
 ctk.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 ctk.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
+locale.setlocale(locale.LC_TIME, '')
 class Home(ctk.CTkToplevel):
     width = 1200
     height = 790
@@ -79,8 +81,6 @@ class Home(ctk.CTkToplevel):
             
     def register_employees(self):
         self.tab.grid_forget()
-        # self.register_employees.grid(row=0, column=1, rowspan=3, columnspan=3 ,padx=20, pady=20, sticky='nsew')
-        # self.register_employees.grid_columnconfigure((0,1,2,3), weight=1)
         RegisterEmployee(self)
         print('entrou')
     
@@ -96,6 +96,19 @@ class Home(ctk.CTkToplevel):
 class RegisterEmployee(ctk.CTkScrollableFrame):
     def __init__(self, parent):
         super().__init__(master=parent, fg_color=COMPLEMENTAR_GREEN, width=250, corner_radius=10)
+        self.grid(row=0, column=1, rowspan=3, columnspan=3 ,padx=20, pady=20, sticky='nsew')
+        self.grid_columnconfigure((0,1,2,3), weight=1)        
+        
+        self.home = parent
+        EmployeeData(self)
+        Trainee(self)
+        
+    
+    
+class EmployeeData(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(master=parent, fg_color=COMPLEMENTAR_GREEN, width=250, corner_radius=10, border_color=DARK_GRAY, border_width=1)
+        
         self.grid(row=0, column=1, rowspan=3, columnspan=3 ,padx=20, pady=20, sticky='nsew')
         self.grid_columnconfigure((0,1,2,3), weight=1)        
         self.home = parent
@@ -134,12 +147,12 @@ class RegisterEmployee(ctk.CTkScrollableFrame):
         
         #? create a option menu with date, using DateEntry
         self.birthday = DateEntry(self, background='darkblue',
-                          foreground='white', borderwidth=2)
+                          foreground='white', borderwidth=2, locale=locale.getlocale()[0])
         self.birthday.grid(row=2, column=2, padx=20, pady=20)
         self.frame_cep = ctk.CTkFrame(self, fg_color=COMPLEMENTAR_GREEN, border_color='#eee')
         self.frame_cep.grid(row=2, column=3, padx=5, pady=20)
         self.frame_cep.grid_columnconfigure((0, 1), weight=1)
-        self.cep_var = ctk.StringVar()
+        self.cep_var = ctk.StringVar(value='CEP')
         self.cep = ctk.CTkEntry(self.frame_cep, width=80, placeholder_text='CEP', textvariable=self.cep_var)
         self.cep.grid(row=0, column=0, padx=20, pady=20)
         self.btn_search = ctk.CTkButton(self.frame_cep, text='Buscar', command=self.get_address_from_cep, width=60)
@@ -218,9 +231,30 @@ class RegisterEmployee(ctk.CTkScrollableFrame):
         self.contact_phone = ctk.CTkEntry(self, width=200, placeholder_text='Telefone')
         self.contact_phone.grid(row=7, column=3, padx=20, pady=20)
         
+        #* line 8
+        self.dependents = []
+        self.dependents_frame = ctk.CTkFrame(self, fg_color=COMPLEMENTAR_GREEN)
+        self.dependents_frame.grid(row=8, column=0, columnspan=4, padx=20, pady=20)
+        self.dependents_frame.grid_columnconfigure((0,1,2,3,4), weight=1)
+        self.dependent_name = ctk.CTkEntry(self.dependents_frame, width=200, placeholder_text='Nome do dependente')
+        self.dependent_name.grid(row=0, column=0, padx=20, pady=20)
+        self.dependent_birthday = DateEntry(self.dependents_frame, background='darkblue', foreground='white', borderwidth=2, locale=locale.getlocale()[0])
+        self.dependent_birthday.grid(row=0, column=1, padx=20, pady=20)
+        self.dependent_cpf = ctk.CTkEntry(self.dependents_frame, width=80, placeholder_text='CPF')
+        self.dependent_cpf.grid(row=0, column=2, padx=20, pady=20)
+        relation = ctk.StringVar(value='Conjugê')
+        self.relation = ctk.CTkOptionMenu(self.dependents_frame, width=100, values=['Conjugê', 'Filho', 'Filha', 'Pai', 'Mãe', 'Irmão', 'Irmã', 'Outro'], variable=relation)
+        self.relation.grid(row=0, column=3, padx=20, pady=20)
+        
+        self.dependent_cpf.bind('<KeyRelease>', self.format_cpf)
+        font_btn = ctk.CTkFont(size=20)
+        self.btn_add_dependent = ctk.CTkButton(self.dependents_frame, text='+', font=font_btn, command=self.new_dependent, width=30)
+        self.btn_add_dependent.grid(row=0, column=4, padx=20, pady=20)
+        
+        
     def back(self):
-        self.grid_forget()
-        self.home.tab.grid(row=0, column=1, padx=20, pady=20, sticky='nsew')
+        self.home.grid_forget()
+        self.home.home.tab.grid(row=0, column=1, padx=20, pady=20, sticky='nsew')
         
         
     def on_date_select(self):
@@ -245,32 +279,111 @@ class RegisterEmployee(ctk.CTkScrollableFrame):
         else:
             print(f"Error: Unable to get address for CEP {self.cep_var.get()}")
             return None
-    
-# class Main(ctk.CTkFrame):
-#     def __init__(self, parent):
-#         super().__init__(master=parent, fg_color=WHITE, width=140)
-#         self.grid(rowspan=3, column=0, sticky='nsew', padx=10, pady=10, )
-#         self.columnconfigure((0,1,2,3), weight=1)
-#         self.rowconfigure((0,1,2,3), weight=1, uniform='a')
-#         # self.pack(side='left', expand=True, fill='x', padx=10, pady=10)
-#         # self.place(relx=0, rely=0, relwidth=0.4, relheight=0.9)
         
-#         self.label = ctk.CTkLabel(self, text='Olá', text_color=BLACK)
-#         self.label.grid(row=0, column=0)
-        # self.pack(pady=10)
+    def format_cpf(self, *args):
+        text = self.dependent_cpf.get().replace(".", "").replace("-", "")[:11]
+        new_text = ""
         
-# class MainRight(ctk.CTkFrame):
-#     def __init__(self, parent):
-#         super().__init__(master=parent, fg_color=GREEN)
-#         self.grid(row=0, column=1, sticky='nsew', padx=10, pady=10)
-#         # self.pack(side='right', expand=True, fill='x', padx=10, pady=10)
-#         # self.place(relx=0.5, rely=0, relwidth=0.4, relheight=0.9)
-        
-#         self.label = ctk.CTkLabel(self, text='Bom dia', text_color=BLACK)
-#         self.label.grid(row=0, column=1)
-#         # self.pack(pady=10)
+        if len(text) <= 11:
+            for index, char in enumerate(text):
+                if not char.isdigit():
+                    continue
+                if index in [2, 5]:
+                    new_text += char + "."
+                elif index == 8:
+                    new_text += char + "-"
+                else:
+                    new_text += char
+            self.dependent_cpf.delete(0, "end")
+            self.dependent_cpf.insert(0, new_text)
+            
+    def new_dependent(self):
+        self.dependents.append(
+            {
+                'name': self.dependent_name.get(),
+                'birthday': self.dependent_birthday.get(),
+                'cpf': self.dependent_cpf.get(),
+                'relation': self.relation.get()
+            }
+        )
+        self.dependent_name.delete(0, 500)
+        self.dependent_cpf.delete(0, 20)
+        print(self.dependents)
     
     
+class Trainee(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(master=parent, fg_color=COMPLEMENTAR_GREEN, width=250, corner_radius=10, border_color=DARK_GRAY, border_width=1)
+        self.grid(row=9, column=0, rowspan=3, columnspan=3 ,padx=20, pady=20, sticky='nsew')
+        self.grid_columnconfigure((0,1,2,3), weight=1)        
+        self.home = parent
+
+        self.title = ctk.CTkLabel(self, text='DADOS  BÁSICOS PARA EMISSÃO DE CONTRATO DE ESTÁGIO', font=ctk.CTkFont(size=20, family=FONT, weight='bold'), justify='center', anchor='w')
+        self.title.grid(row=0, column=1, columnspan=2, padx=20, pady=20)
+        
+        #* line 1
+        self.frame_cep = ctk.CTkFrame(self, fg_color=COMPLEMENTAR_GREEN, border_color='#eee')
+        self.frame_cep.grid(row=1, column=0, padx=5, pady=20)
+        self.frame_cep.grid_columnconfigure((0,1), weight=1)
+        self.cep_var = ctk.StringVar(value='CEP')
+        self.cep = ctk.CTkEntry(self.frame_cep, width=100, placeholder_text='CEP', textvariable=self.cep_var)
+        self.cep.grid(row=0, column=0, padx=20, pady=20)
+        self.btn_search = ctk.CTkButton(self.frame_cep, text='Buscar', command=self.get_address_from_cep, width=80)
+        self.btn_search.grid(row=0, column=1, padx=5, pady=20)
+        
+        self.cep.bind('<KeyRelease>', self.cep_changed)
+        
+        self.address_street = ctk.StringVar(value='Endereço')
+        self.address_neighboor = ctk.StringVar(value='Bairro')
+        self.address_city = ctk.StringVar(value='Cidade')
+        self.address_state = ctk.StringVar(value='UF')
+        
+        self.street = ctk.CTkEntry(self, width=150, placeholder_text='Endereço', textvariable=self.address_street)
+        self.street.grid(row=1, column=1, padx=20, pady=20)
+        self.neighboor = ctk.CTkEntry(self, width=120, placeholder_text='Bairro', textvariable=self.address_neighboor)
+        self.neighboor.grid(row=1, column=2, padx=20, pady=20)
+        self.city = ctk.CTkEntry(self, width=120, placeholder_text='Cidade', textvariable=self.address_city)
+        self.city.grid(row=1, column=3, padx=20, pady=20)
+        self.state_uf = ctk.CTkEntry(self, width=50, placeholder_text='UF', textvariable=self.address_state)
+        self.state_uf.grid(row=1, column=4, padx=5, pady=20)
+        
+        #* line 2
+        self.life_insurance_policy = ctk.CTkEntry(self, width=200, placeholder_text='Apólice de seguro de vida')
+        self.life_insurance_policy.grid(row=2, column=0, padx=5, pady=20)
+        self.college = ctk.CTkEntry(self, width=100, placeholder_text='Instituição de ensino')
+        self.college.grid(row=2, column=1, padx=5, pady=20)
+        self.course = ctk.CTkEntry(self, width=200, placeholder_text='Nome do curso')
+        self.course.grid(row=2, column=2, padx=10, pady=20)
+        self.training_period = ctk.CTkEntry(self, width=100, placeholder_text='Período estagiário')
+        self.training_period.grid(row=2, column=3, padx=5, pady=20)
+        self.ra = ctk.CTkEntry(self, width=100, placeholder_text='RA')
+        self.ra.grid(row=2, column=4, padx=5, pady=20)
+        
+        
+        
+        
+    def cep_changed(self, *args):
+        self.cep_var.set(self.cep.get())
+        print(self.cep_var.get())
+        
+    def get_address_from_cep(self, *args):
+        # print(self.cep_var.get())
+        response = requests.get(f'http://viacep.com.br/ws/{self.cep_var.get()}/json/')
+        if response.status_code == 200 and response.text.strip():
+            data = response.json()
+            # self.address_data.update(data)
+            self.address_street.set(data['logradouro'])
+            self.address_neighboor.set(data['bairro'])
+            self.address_city.set(data['localidade'])
+            self.address_state.set(data['uf'])
+            return data
+        else:
+            print(f"Error: Unable to get address for CEP {self.cep_var.get()}")
+            return None
+        
+        
+        
+        
 class Footer(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(master=parent, fg_color=DARK_GRAY)

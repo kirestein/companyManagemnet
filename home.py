@@ -316,7 +316,6 @@ class EmployeeData(ctk.CTkFrame):
         self.dependent_cpf.delete(0, 20)
         print(self.dependents)
     
-    
 class Trainee(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(master=parent, fg_color=WHITE, width=250, corner_radius=10, border_color=DARK_GRAY, border_width=1)
@@ -387,7 +386,6 @@ class Trainee(ctk.CTkFrame):
             print(f"Error: Unable to get address for CEP {self.cep_var.get()}")
             return None
         
-
 class Documentation(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(master=parent, fg_color=WHITE, width=250, corner_radius=10, border_color=DARK_GRAY, border_width=1)
@@ -480,7 +478,6 @@ class Documentation(ctk.CTkFrame):
                     new_text += char
             self.cpf.delete(0, "end")
             self.cpf.insert(0, new_text)
-       
        
 class ContractData(ctk.CTkFrame):
     def __init__(self, parent):

@@ -95,7 +95,7 @@ class Home(ctk.CTkToplevel):
     
 class RegisterEmployee(ctk.CTkScrollableFrame):
     def __init__(self, parent):
-        super().__init__(master=parent, fg_color=COMPLEMENTAR_GREEN, width=250, corner_radius=10)
+        super().__init__(master=parent, fg_color=WHITE, width=250, corner_radius=10)
         self.grid(row=0, column=1, rowspan=3, columnspan=3 ,padx=20, pady=20, sticky='nsew')
         self.grid_columnconfigure((0,1,2,3), weight=1)        
         
@@ -107,7 +107,7 @@ class RegisterEmployee(ctk.CTkScrollableFrame):
     
 class EmployeeData(ctk.CTkFrame):
     def __init__(self, parent):
-        super().__init__(master=parent, fg_color=COMPLEMENTAR_GREEN, width=250, corner_radius=10, border_color=DARK_GRAY, border_width=1)
+        super().__init__(master=parent, fg_color=WHITE, width=250, corner_radius=10, border_color=DARK_GRAY, border_width=1)
         
         self.grid(row=0, column=1, rowspan=3, columnspan=3 ,padx=20, pady=20, sticky='nsew')
         self.grid_columnconfigure((0,1,2,3), weight=1)        
@@ -127,7 +127,7 @@ class EmployeeData(ctk.CTkFrame):
         
         
         #* line 1
-        self.frame_1 = ctk.CTkFrame(self, fg_color=COMPLEMENTAR_GREEN)
+        self.frame_1 = ctk.CTkFrame(self, fg_color=WHITE)
         self.frame_1.grid(row=1, column=0, padx=20, pady=20)
         self.frame_1.grid_columnconfigure((0,1), weight=1)
         self.number = ctk.CTkEntry(self.frame_1, width=60, placeholder_text='Nº')
@@ -149,7 +149,7 @@ class EmployeeData(ctk.CTkFrame):
         self.birthday = DateEntry(self, background='darkblue',
                           foreground='white', borderwidth=2, locale=locale.getlocale()[0])
         self.birthday.grid(row=2, column=2, padx=20, pady=20)
-        self.frame_cep = ctk.CTkFrame(self, fg_color=COMPLEMENTAR_GREEN, border_color='#eee')
+        self.frame_cep = ctk.CTkFrame(self, fg_color=WHITE, border_color='#eee')
         self.frame_cep.grid(row=2, column=3, padx=5, pady=20)
         self.frame_cep.grid_columnconfigure((0, 1), weight=1)
         self.cep_var = ctk.StringVar(value='CEP')
@@ -176,7 +176,7 @@ class EmployeeData(ctk.CTkFrame):
         self.state_uf.grid(row=3, column=3, padx=5, pady=20)
         
         #* line 4
-        self.frame_4 = ctk.CTkFrame(self, fg_color=COMPLEMENTAR_GREEN)
+        self.frame_4 = ctk.CTkFrame(self, fg_color=WHITE)
         self.frame_4.grid(row=4, column=0, padx=1, pady=20)
         self.frame_4.grid_columnconfigure((0, 1), weight=1)
         self.number = ctk.CTkEntry(self.frame_4, width=80, placeholder_text='Nº')
@@ -187,7 +187,7 @@ class EmployeeData(ctk.CTkFrame):
         self.phone_number.grid(row=4, column=1, padx=20, pady=20)
         self.mobile = ctk.CTkEntry(self, width=200, placeholder_text='Celular')
         self.mobile.grid(row=4, column=2, padx=20, pady=20)
-        self.frame_4_1 = ctk.CTkEntry(self, fg_color=COMPLEMENTAR_GREEN, border_color=COMPLEMENTAR_GREEN)
+        self.frame_4_1 = ctk.CTkEntry(self, fg_color=WHITE, border_color=WHITE)
         self.frame_4_1.grid(row=4, column=3, padx=20, pady=20)
         self.frame_4_1.grid_columnconfigure((0,1), weight=1)
         self.naturalness = ctk.CTkEntry(self.frame_4_1, width=90, placeholder_text='Naturalidade')
@@ -202,7 +202,7 @@ class EmployeeData(ctk.CTkFrame):
         self.mother.grid(row=5, column=2, columnspan=2, padx=20, pady=20)
         
         #* line 6
-        self.frame_6 = ctk.CTkFrame(self, fg_color=COMPLEMENTAR_GREEN)
+        self.frame_6 = ctk.CTkFrame(self, fg_color=WHITE)
         self.frame_6.grid(row=6, column=0, columnspan=2, padx=20, pady=20)
         self.frame_6.grid_columnconfigure((0,1,2), weight=1)
         marital_status_var = ctk.StringVar(value='Solteiro')
@@ -213,7 +213,7 @@ class EmployeeData(ctk.CTkFrame):
         self.gender.grid(row=0, column=1, padx=5, pady=20)
         self.graduation = ctk.CTkEntry(self.frame_6, width=100, placeholder_text='Grau de instrução')
         self.graduation.grid(row=0, column=2, padx=5, pady=20)
-        self.frame_6_1 = ctk.CTkFrame(self, fg_color=COMPLEMENTAR_GREEN)
+        self.frame_6_1 = ctk.CTkFrame(self, fg_color=WHITE)
         self.frame_6_1.grid(row=6, column=2, columnspan=2, padx=10, pady=20)
         self.frame_6_1.grid_columnconfigure((0,1,2), weight=1)
         self.skin_color = ctk.CTkEntry(self.frame_6_1, width=120, placeholder_text='Cor de pele')
@@ -233,7 +233,7 @@ class EmployeeData(ctk.CTkFrame):
         
         #* line 8
         self.dependents = []
-        self.dependents_frame = ctk.CTkFrame(self, fg_color=COMPLEMENTAR_GREEN)
+        self.dependents_frame = ctk.CTkFrame(self, fg_color=WHITE)
         self.dependents_frame.grid(row=8, column=0, columnspan=4, padx=20, pady=20)
         self.dependents_frame.grid_columnconfigure((0,1,2,3,4), weight=1)
         self.dependent_name = ctk.CTkEntry(self.dependents_frame, width=200, placeholder_text='Nome do dependente')
@@ -313,7 +313,7 @@ class EmployeeData(ctk.CTkFrame):
     
 class Trainee(ctk.CTkFrame):
     def __init__(self, parent):
-        super().__init__(master=parent, fg_color=COMPLEMENTAR_GREEN, width=250, corner_radius=10, border_color=DARK_GRAY, border_width=1)
+        super().__init__(master=parent, fg_color=WHITE, width=250, corner_radius=10, border_color=DARK_GRAY, border_width=1)
         self.grid(row=9, column=0, rowspan=3, columnspan=3 ,padx=20, pady=20, sticky='nsew')
         self.grid_columnconfigure((0,1,2,3), weight=1)        
         self.home = parent
@@ -322,7 +322,7 @@ class Trainee(ctk.CTkFrame):
         self.title.grid(row=0, column=1, columnspan=2, padx=20, pady=20)
         
         #* line 1
-        self.frame_cep = ctk.CTkFrame(self, fg_color=COMPLEMENTAR_GREEN, border_color='#eee')
+        self.frame_cep = ctk.CTkFrame(self, fg_color=WHITE, border_color='#eee')
         self.frame_cep.grid(row=1, column=0, padx=5, pady=20)
         self.frame_cep.grid_columnconfigure((0,1), weight=1)
         self.cep_var = ctk.StringVar(value='CEP')

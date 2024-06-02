@@ -320,8 +320,8 @@ class Trainee(ctk.CTkFrame):
         self.grid_columnconfigure((0,1,2,3), weight=1)        
         self.home = parent
 
-        self.title = ctk.CTkLabel(self, text='DADOS  BÁSICOS PARA EMISSÃO DE CONTRATO DE ESTÁGIO', font=ctk.CTkFont(size=20, family=FONT, weight='bold'), justify='center', anchor='w')
-        self.title.grid(row=0, column=1, columnspan=2, padx=20, pady=20)
+        self.title = ctk.CTkLabel(self, text='   DADOS  BÁSICOS PARA EMISSÃO DE CONTRATO DE ESTÁGIO', font=ctk.CTkFont(size=20, family=FONT, weight='bold'), justify='center', anchor='center')
+        self.title.grid(row=0, column=0, columnspan=4, padx=20, pady=20, sticky='nsew')
         
         #* line 1
         self.frame_cep = ctk.CTkFrame(self, fg_color=WHITE, border_color='#eee')

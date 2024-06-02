@@ -105,8 +105,12 @@ class RegisterEmployee(ctk.CTkScrollableFrame):
         Documentation(self)
         ContractData(self)
         
-    
-    
+        self.btn_save = ctk.CTkButton(self, anchor='center', width=400,command=self.save, font=ctk.CTkFont(size=20), text='Save')
+        self.btn_save.grid(row=27, column=1, columnspan=2, padx=20, pady=20)
+        
+    def save(self):
+        pass
+        
 class EmployeeData(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(master=parent, fg_color=WHITE, width=250, corner_radius=10, border_color=DARK_GRAY, border_width=1)

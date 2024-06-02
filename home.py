@@ -383,6 +383,153 @@ class Trainee(ctk.CTkFrame):
             print(f"Error: Unable to get address for CEP {self.cep_var.get()}")
             return None
         
+
+class Documentation(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(master=parent, fg_color=WHITE, width=250, corner_radius=10, border_color=DARK_GRAY, border_width=1)
+        self.grid(row=12, column=0, rowspan=3, columnspan=3 ,padx=20, pady=20, sticky='nsew')
+        self.grid_columnconfigure((0,1,2,3), weight=1)
+        
+        self.title = ctk.CTkLabel(self, text='DOCUMENTAÇÃO', font=ctk.CTkFont(size=20, family=FONT, weight='bold'), justify='center', anchor='center')
+        self.title.grid(row=0, column=1, columnspan=2, padx=20, pady=20, sticky='nsew')
+        
+        #* line 1
+        self.frame_line_1 = ctk.CTkFrame(self, fg_color=WHITE)
+        self.frame_line_1.grid(row=1, column=0, columnspan=3, padx=20, pady=20, sticky='W')
+        self.frame_line_1.grid_columnconfigure((0,1,2), weight=1)
+        self.identity = ctk.CTkEntry(self.frame_line_1, width=80, placeholder_text='RG')
+        self.identity.grid(row=0, column=0, padx=20, pady=20)
+        self.agency = ctk.CTkEntry(self.frame_line_1, width=80, placeholder_text='Orgão emissor')
+        self.agency.grid(row=0, column=1, padx=20, pady=20)
+        self.issue_date = DateEntry(self.frame_line_1, background='darkblue',
+                          foreground='white', borderwidth=2, locale=locale.getlocale()[0])
+        self.issue_date.grid(row=0, column=2, padx=20, pady=20)
+        # criar um botão para adicionar foto e um frame que irá exibir a foto salva, a foto que será exibida deverá vir do banco de dados, ao salvar a foto, ela deverá ser convertida em base64 e ao ser pega do banco de dados deverá ser transformada em imagem
+        
+        #* line 2
+        self.frame_line_2 = ctk.CTkFrame(self, fg_color=WHITE)
+        self.frame_line_2.grid(row=2, column=0, columnspan=3, padx=20, pady=20, sticky='W')
+        self.frame_line_2.grid_columnconfigure((0,1,2), weight=1)
+        self.cpf = ctk.CTkEntry(self.frame_line_2, width=80, placeholder_text='CPF')
+        self.cpf.grid(row=0, column=0, padx=20, pady=20)
+        self.cpf.bind('<KeyRelease>', self.format_cpf)
+        self.pis = ctk.CTkEntry(self.frame_line_2, width=100, placeholder_text='PIS/PASEP')
+        self.pis.grid(row=0, column=1, padx=20, pady=20)
+        self.reservist = ctk.CTkEntry(self.frame_line_2, width=100, placeholder_text='Reservista')
+        self.reservist.grid(row=0, column=2, padx=20, pady=20)
+        
+        #* line 3
+        self.frame_line_3 = ctk.CTkFrame(self, fg_color=WHITE)
+        self.frame_line_3.grid(row=3, column=0, columnspan=2, padx=20, pady=20, sticky='W')
+        self.frame_line_3.grid_columnconfigure((0,1), weight=1)
+        self.ctps = ctk.CTkEntry(self.frame_line_3, width=80, placeholder_text='CTPS')
+        self.ctps.grid(row=0, column=0, padx=20, pady=20)
+        self.series = ctk.CTkEntry(self.frame_line_3, width=80, placeholder_text='Série')
+        self.series.grid(row=0, column=1, padx=20, pady=20)
+        
+        #* line 4
+        self.frame_line_4 = ctk.CTkFrame(self, fg_color=WHITE)
+        self.frame_line_4.grid(row=4, column=0, columnspan=3, padx=20, pady=20, sticky='W')
+        self.frame_line_4.grid_columnconfigure((0,1,2), weight=1)
+        self.voter_id = ctk.CTkEntry(self.frame_line_4, width=80, placeholder_text='Título de eleitor')
+        self.voter_id.grid(row=0, column=0, padx=20, pady=20)
+        self.voter_section = ctk.CTkEntry(self.frame_line_4, width=100, placeholder_text='Seção')
+        self.voter_section.grid(row=0, column=1, padx=20, pady=20)
+        self.voter_district = ctk.CTkEntry(self.frame_line_4, width=100, placeholder_text='Zona')
+        self.voter_district.grid(row=0, column=2, padx=20, pady=20)
+        
+        #* line 5
+        self.drivers_license = ctk.CTkEntry(self, width=200, placeholder_text='Nº Habilitação')
+        self.drivers_license.grid(row=5, column=0, padx=20, pady=20)
+        self.category = ctk.CTkEntry(self, width=200, placeholder_text='Categoria')
+        self.category.grid(row=5, column=1, padx=20, pady=20)
+        self.shipping_date = DateEntry(self, background='darkblue', foreground='white', borderwidth=2, locale=locale.getlocale()[0])
+        self.shipping_date.grid(row=5, column=2, padx=20, pady=20)
+        self.expiration_date = DateEntry(self, background='darkblue', foreground='white', borderwidth=2, locale=locale.getlocale()[0])
+        self.expiration_date.grid(row=5, column=3, padx=20, pady=20)
+        
+        #* line 6
+        self.frame_line_6 = ctk.CTkFrame(self, fg_color=WHITE)
+        self.frame_line_6.grid(row=6, column=0, columnspan=2, padx=20, pady=20, sticky='W')
+        self.frame_line_6.grid_columnconfigure((0,1), weight=1)
+        self.health_plan = ctk.CTkEntry(self.frame_line_6, width=80, placeholder_text='Plano de Saúde')
+        self.health_plan.grid(row=0, column=0, padx=20, pady=20)
+        self.health_plan_id = ctk.CTkEntry(self.frame_line_6, width=100, placeholder_text='Nº carteirinha')
+        self.health_plan_id.grid(row=0, column=1, padx=20, pady=20)
+        
+        
+        
+        
+    def format_cpf(self, *args):
+        text = self.cpf.get().replace(".", "").replace("-", "")[:11]
+        new_text = ""
+        
+        if len(text) <= 11:
+            for index, char in enumerate(text):
+                if not char.isdigit():
+                    continue
+                if index in [2, 5]:
+                    new_text += char + "."
+                elif index == 8:
+                    new_text += char + "-"
+                else:
+                    new_text += char
+            self.cpf.delete(0, "end")
+            self.cpf.insert(0, new_text)
+       
+       
+class ContractData(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(master=parent, fg_color=WHITE, width=250, border_color=DARK_GRAY, border_width=1)
+        self.grid(row=19, column=0, columnspan=3, padx=20, pady=20)
+        self.columnconfigure((0,1,2,3), weight=1)
+        
+        self.title = ctk.CTkLabel(self, text='DADOS DE CONTRATAÇÃO', font=ctk.CTkFont(size=20, family=FONT, weight='bold'), justify='center', anchor='center')
+        self.title.grid(row=0, column=1, columnspan=2, padx=20, pady=20, sticky='nsew')
+        
+        #* line 1
+        self.job_position = ctk.CTkOptionMenu(self, width=200, values=['a', 'b', 'c'])
+        self.job_position.grid(row=1, column=0, padx=20, pady=20)
+        self.job_time = ctk.CTkEntry(self, width=200, placeholder_text='Horário')
+        self.job_time.grid(row=1, column=1, padx=20, pady=20)
+        self.job_start = DateEntry(self, background='darkblue', foreground='white', borderwidth=2, locale=locale.getlocale()[0])
+        self.job_start.grid(row=1, column=2, padx=20, pady=20)
+        self.job_end = DateEntry(self, background='darkblue', foreground='white', borderwidth=2, locale=locale.getlocale()[0])
+        self.job_end.grid(row=1, column=3, padx=20, pady=20)
+        
+        #* line 2
+        self.bank_id = ctk.CTkEntry(self, width=200, placeholder_text='Banco')
+        self.bank_id.grid(row=2, column=0, padx=20, pady=20)
+        self.bank_agency = ctk.CTkEntry(self, width=200, placeholder_text='Agência')
+        self.bank_agency.grid(row=2, column=1, padx=20, pady=20)
+        self.bank_account = ctk.CTkEntry(self, width=200, placeholder_text='Conta')
+        self.bank_account.grid(row=2, column=2, padx=20, pady=20)
+        self.account_type = ctk.CTkEntry(self, width=200, placeholder_text='Tipo de conta')
+        self.account_type.grid(row=2, column=3, padx=20, pady=20)
+        
+        #* line 3
+        self.job_function = ctk.CTkEntry(self, width=200, placeholder_text='Seg Função')
+        self.job_function.grid(row=3, column=0, padx=20, pady=20)
+        self.job_salary = ctk.CTkEntry(self, width=200, placeholder_text='Salário')
+        self.job_salary.grid(row=3, column=1, padx=20, pady=20)
+        self.frame_line_3 = ctk.CTkFrame(self, fg_color=WHITE)
+        self.frame_line_3.grid(row=3, column=2, columnspan=2, padx=20, pady=20)
+        self.frame_line_3.grid_columnconfigure((0,1,2), weight=1)
+        self.time_label = ctk.CTkLabel(self.frame_line_3, text='Carga Horária: ')
+        self.time_label.grid(row=0, column=0, padx=20, pady=20)
+        self.week = ctk.CTkEntry(self.frame_line_3, placeholder_text='Semanal', width=60)
+        self.week.grid(row=0, column=1, padx=20, pady=20)
+        self.month = ctk.CTkEntry(self.frame_line_3,  width=60, placeholder_text='Mensal')
+        self.month.grid(row=0, column=2, padx=20, pady=20)
+        
+        #* line 4
+        
+        #* line 5
+        
+        #* line 6
+        
+        #* line 7
+        
         
         
         

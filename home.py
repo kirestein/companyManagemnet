@@ -524,14 +524,61 @@ class ContractData(ctk.CTkFrame):
         self.month.grid(row=0, column=2, padx=20, pady=20)
         
         #* line 4
+        self.link = ctk.CTkRadioButton(self, text='Posui acúmulo', width=200, command=self.link_true)
+        self.link.grid(row=4, column=0, padx=20, pady=20)
+        self.frame_line_4 = ctk.CTkFrame(self)
+        # self.frame_line_4.grid(row=4, column=1, padx=20, pady=20, sticky='w')
+        self.frame_line_4.grid_columnconfigure((0,1,2,3,4), weight=1)
+        self.company = ctk.CTkEntry(self.frame_line_4, width=80, placeholder_text='Empresa')
+        self.company.grid(row=0, column=0, padx=20, pady=20)
+        self.subject = ctk.CTkEntry(self.frame_line_4, width=80, placeholder_text='Disciplina')
+        self.subject.grid(row=0, column=1, padx=20, pady=20)
+        self.cat = ctk.CTkEntry(self.frame_line_4, width=80, placeholder_text='Cat')
+        self.cat.grid(row=0, column=2, padx=20, pady=20)
+        self.weekly_classes = ctk.CTkEntry(self.frame_line_4, width=80, placeholder_text='Aulas semanais')
+        self.weekly_classes.grid(row=0, column=3, padx=20, pady=20)
+        self.btn_clear = ctk.CTkButton(self.frame_line_4, width=30, text='🗑️', command=self.clear)
+        self.btn_clear.grid(row=0, column=4, padx=20, pady=20)
         
         #* line 5
+        self.family_salary_1 = ctk.CTkEntry(self, width=200, placeholder_text='Salário família 1')
+        self.family_salary_1.grid(row=5, column=0, padx=20, pady=20)
+        self.family_salary_2 = ctk.CTkEntry(self, width=200, placeholder_text='Salário família 2')
+        self.family_salary_2.grid(row=5, column=1, padx=20, pady=20)
+        self.family_salary_3 = ctk.CTkEntry(self, width=200, placeholder_text='Salário família 3')
+        self.family_salary_3.grid(row=5, column=2, padx=20, pady=20)
+        self.family_salary_4 = ctk.CTkEntry(self, width=200, placeholder_text='Salário família 4')
+        self.family_salary_4.grid(row=5, column=3, padx=20, pady=20)        
         
         #* line 6
+        self.parenting_1 = ctk.CTkEntry(self, width=200, placeholder_text='Parentesco 1')
+        self.parenting_1.grid(row=6, column=0, padx=20, pady=20)
+        self.parenting_2 = ctk.CTkEntry(self, width=200, placeholder_text='Parentesco 2')
+        self.parenting_2.grid(row=6, column=1, padx=20, pady=20)
+        self.parenting_3 = ctk.CTkEntry(self, width=200, placeholder_text='Parentesco 3')
+        self.parenting_3.grid(row=6, column=2, padx=20, pady=20)
+        self.parenting_4 = ctk.CTkEntry(self, width=200, placeholder_text='Parentesco 4')
+        self.parenting_4.grid(row=6, column=3, padx=20, pady=20)
         
         #* line 7
+        self.irpf_1 = ctk.CTkEntry(self, width=200, placeholder_text='IRPF 1')
+        self.irpf_1.grid(row=7, column=0, padx=20, pady=20)
+        self.irpf_2 = ctk.CTkEntry(self, width=200, placeholder_text='IRPF 2')
+        self.irpf_2.grid(row=7, column=1, padx=20, pady=20)
+        self.irpf_3 = ctk.CTkEntry(self, width=200, placeholder_text='IRPF 3')
+        self.irpf_3.grid(row=7, column=2, padx=20, pady=20)
+        self.irpf_4 = ctk.CTkEntry(self, width=200, placeholder_text='IRPF 4')
+        self.irpf_4.grid(row=7, column=3, padx=20, pady=20)
         
-        
+    def link_true(self):
+        if self.link:
+            self.frame_line_4.grid(row=4, column=1, columnspan=3, padx=20, pady=20, sticky='w')
+        else:
+            self.frame_line_4.grid_forget()
+            
+    def clear(self):
+        self.link.deselect()
+        self.frame_line_4.grid_forget()
         
         
 class Footer(ctk.CTkFrame):

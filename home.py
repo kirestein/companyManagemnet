@@ -102,6 +102,8 @@ class RegisterEmployee(ctk.CTkScrollableFrame):
         self.home = parent
         EmployeeData(self)
         Trainee(self)
+        Documentation(self)
+        ContractData(self)
         
     
     

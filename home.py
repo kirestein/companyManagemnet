@@ -477,6 +477,24 @@ class Documentation(ctk.CTkFrame):
                           foreground='white', borderwidth=2, locale=locale.getlocale()[0])
         self.issue_date.grid(row=0, column=2, padx=20, pady=20)
         # criar um botão para adicionar foto e um frame que irá exibir a foto salva, a foto que será exibida deverá vir do banco de dados, ao salvar a foto, ela deverá ser convertida em base64 e ao ser pega do banco de dados deverá ser transformada em imagem
+        self.btn_add_photo = ctk.CTkButton(
+            self,
+            text='Adicionar foto',
+            command=self.add_photo,
+        )
+        self.btn_add_photo.grid(row=1, column=3, padx=20, pady=20)
+        self.photo = ctk.CTkImage(
+            light_image = Image.open('black_man.png'),
+            size=(150, 187.5)
+        )
+        self.photo_label = ctk.CTkLabel(
+            self,
+            image=self.photo,
+            text='',
+            width=200,
+            height=250
+        )
+        self.photo_label.grid(row=2, column=3, rowspan=2, padx=20, pady=20)
         
         #* line 2
         self.frame_line_2 = ctk.CTkFrame(self, fg_color=WHITE)
@@ -548,6 +566,17 @@ class Documentation(ctk.CTkFrame):
                     new_text += char
             self.cpf.delete(0, "end")
             self.cpf.insert(0, new_text)
+            
+    def add_photo(self):
+        file_path = ctk.filedialog.askopenfilename()
+        if file_path:
+            image = ctk.CTkImage(light_image=Image.open(file_path), size=(150,187.5))
+            # photo = ImageTk.PhotoImage(image)
+            self.photo_label.configure(image=image)
+            # self.photo_label.image = photo
+            
+            
+        
        
 class ContractData(ctk.CTkFrame):
     def __init__(self, parent):

@@ -55,24 +55,57 @@ class Home(ctk.CTkToplevel):
         self.tab.tab('Cadastros').grid_rowconfigure((0,1), weight=1)
         self.tab.tab('Gerenciamento').grid_columnconfigure(0, weight=1) # configure grid of individual tabs
         
+        #! tabview Cadastros
         self.btn_register_employee = ctk.CTkButton(
             self.tab.tab('Cadastros'),
             text='Cadastrar Funcionário',
             command=self.register_employees
         )
-        self.btn_register_employee.grid(row=0, column=0, padx=10, pady=10)
+        self.btn_register_employee.grid(row=0, column=0, padx=10, pady=10, sticky='w')
         
-        self.btn_register_job_salaies = ctk.CTkButton(
+        self.btn_register_job_salaries = ctk.CTkButton(
             self.tab.tab('Cadastros'),
             text='Cadastrar Cargos e Salários',
+            command=self.register_job
         )
-        self.btn_register_job_salaies.grid(row=0, column=1, padx=10, pady=10)
+        self.btn_register_job_salaries.grid(row=0, column=1, padx=10, pady=10, sticky='w')
         
         self.btn_register_forms = ctk.CTkButton(
             self.tab.tab('Cadastros'),
-            text='Cadastrar formulário'
+            text='Cadastrar formulário',
+            command=self.register_form
         )
-        self.btn_register_forms.grid(row=1, column=0, padx=10, pady=10)
+        self.btn_register_forms.grid(row=1, column=0, padx=10, pady=10, sticky='w')
+        
+        #! tabview Gerenciamento
+        
+        self.btn_consult_employee = ctk.CTkButton(
+            self.tab.tab('Gerenciamento'),
+            text='Consultar Funcionários',
+            command=self.get_employees
+        )
+        self.btn_consult_employee.grid(row=0, column=0, padx=10, pady=10, sticky='w')
+        
+        self.btn_active_staff = ctk.CTkButton(
+            self.tab.tab('Gerenciamento'),
+            text='Funcionários Ativos',
+            command=self.get_active_staff
+        )
+        self.btn_active_staff.grid(row=0, column=1, padx=10, pady=10, sticky='w')
+        
+        self.btn_accounting = ctk.CTkButton(
+            self.tab.tab('Gerenciamento'),
+            text='Contabilidade',
+            command=self.get_accounting
+        )
+        self.btn_accounting.grid(row=1, column=0, padx=10, pady=10, sticky='w')
+        
+        self.btn_tag = ctk.CTkButton(
+            self.tab.tab('Gerenciamento'),
+            text='Crachás',
+            command=self.get_tag
+        )
+        self.btn_tag.grid(row=1, column=1, padx=10, pady=10, sticky='w')
         
         Footer(self)
         
@@ -88,7 +121,29 @@ class Home(ctk.CTkToplevel):
     def register_employees(self):
         self.tab.grid_forget()
         RegisterEmployee(self)
-        print('entrou')
+        
+    def register_job(self):
+        self.tab.grid_forget()
+        RegisterJobSalary(self)
+        
+    def register_form(self):
+        self.tab.grid_forget()
+        RegisterForm(self)
+        
+    def get_employees(self):
+        pass
+    
+    def get_active_staff(self):
+        pass
+    
+    def get_accounting(self):
+        pass
+    
+    def get_tag(self):
+        pass
+    
+    def print_bithdays(self):
+        pass
     
         
         

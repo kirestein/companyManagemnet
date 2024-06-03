@@ -118,6 +118,7 @@ class Home(ctk.CTkToplevel):
         
         Footer(self)
         
+        # self.mainloop()
     def change_title_bar_color(self):
         try:
             HWND = windll.user32.GetParent(self.winfo_id())

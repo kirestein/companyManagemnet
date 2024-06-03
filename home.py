@@ -591,5 +591,32 @@ class Footer(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(master=parent, fg_color=DARK_GRAY)
         self.grid(column=1, row=3, columnspan=3, sticky='nsew', padx=10, pady=10)
-        # self.pack(side='bottom', expand=True, fill='x', padx=10, pady=10)
-        # self.place(rely=0.9, relwidth=1, relheight=0.1)
+        self.grid_columnconfigure((0,1,2,3), weight=1)
+        self.time_label = ctk.CTkLabel(self, fg_color=DARK_GRAY, font=ctk.CTkFont(size=12))
+        self.time_label.grid(row=0, column=0, padx=20, pady=20)
+        self.weather_label = ctk.CTkLabel(self, fg_color=DARK_GRAY, font=ctk.CTkFont(size=12))
+        self.weather_label.grid(row=0, column=1, padx=20, pady=20, sticky='e')
+        
+        self.developed_by = ctk.CTkLabel(self, text='Developed by: St3in Tech')
+        self.developed_by.grid(row=1, column=0, columnspan=2, padx=20, pady=20)
+        
+        self.update_time()
+        self.update_weather()
+        
+        
+    def update_time(self):
+        self.now = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+        self.time_label.configure(text=self.now)
+        self.time_label.after(1000, self.update_time)
+        
+    def update_weather(self):
+        response = requests.get(f'http://apiadvisor.climatempo.com.br/api/v1/weather/locale/3477/current?token={API_KEY}')
+        data = response.json()
+        temp = data['data']['temperature']
+        condition = data['data']['condition']
+        humidity = data['data']['humidity']
+        self.weather_label.configure(text=f'Temperatura: {temp}°C - Condição do tempo: {condition} - humidade relativa: {humidity}')
+        self.after(18000000, self.update_weather) # update each 5 hours
+        
+        
+# Home()

@@ -623,7 +623,7 @@ class ContractData(ctk.CTkFrame):
         self.month.grid(row=0, column=2, padx=20, pady=20)
         
         #* line 4
-        self.link = ctk.CTkRadioButton(self, text='Posui acúmulo', width=200, command=self.link_true)
+        self.link = ctk.CTkCheckBox(self, text='Posui acúmulo', width=200, command=self.link_true)
         self.link.grid(row=4, column=0, padx=20, pady=20)
         self.frame_line_4 = ctk.CTkFrame(self)
         # self.frame_line_4.grid(row=4, column=1, padx=20, pady=20, sticky='w')

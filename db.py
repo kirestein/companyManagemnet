@@ -12,7 +12,7 @@ initialize_app(cred, {
     'databaseURL': DATABASE_URL
 })
 
-# ref = db.reference("/")
+ref = db.reference("/")
 app = FastAPI
 
 

@@ -668,9 +668,11 @@ class ContractData(ctk.CTkFrame):
         self.irpf_4.grid(row=7, column=3, padx=20, pady=20)
         
     def link_true(self):
-        if self.link:
+        if self.link.get():
             self.frame_line_4.grid(row=4, column=1, columnspan=3, padx=20, pady=20, sticky='w')
+            # print(self.link.get())
         else:
+            # print(self.link.get())
             self.frame_line_4.grid_forget()
         
 class RegisterJobSalary(ctk.CTkFrame):

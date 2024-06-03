@@ -41,12 +41,21 @@ class Home(ctk.CTkToplevel):
         #! left frame
         self.left_frame = ctk.CTkFrame(self, width=60, corner_radius=5)
         self.left_frame.grid(row=0, column=0, rowspan=4, sticky="nsew")
+        self.left_frame.grid_columnconfigure((0,1), weight=1)
         self.left_frame.grid_rowconfigure(4, weight=1)
+        self.btn_print = ctk.CTkButton(
+            self.left_frame,
+            text='🖨️',
+            width=50,
+            font=ctk.CTkFont(size=20),
+            command=self.print_bithdays
+        )
+        self.btn_print.grid(row=0, column=1, padx=20, pady=20, sticky='e')
         self.aniversariantes_label = ctk.CTkLabel(self.left_frame, text='Aniversariantes do mês', font=ctk.CTkFont(size=20, family=FONT, weight='bold'), justify='center', anchor='w')
-        self.aniversariantes_label.grid(row=0, column=0, padx=40, pady=(20,10))
+        self.aniversariantes_label.grid(row=1, column=0, columnspan=2, padx=40, pady=(20,10))
         
         
-        #! Tabview 1
+        #! Create Tabview 
         self.tab = ctk.CTkTabview(self, width=100, corner_radius=10)
         self.tab.grid(row=0, column=1, padx=20, pady=20, sticky='nsew')
         self.tab.add('Cadastros')

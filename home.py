@@ -18,6 +18,7 @@ ctk.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 ctk.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 locale.setlocale(locale.LC_TIME, '')
+
 class Home(ctk.CTkToplevel):
     width = 1200
     height = 790
@@ -34,6 +35,8 @@ class Home(ctk.CTkToplevel):
         # self.columnconfigure(1, weight=0)
         self.rowconfigure((0,1,2), weight=1, uniform='a')
         self.rowconfigure(3,weight=0)
+        
+        
         
         #! left frame
         self.left_frame = ctk.CTkFrame(self, width=60, corner_radius=5)

@@ -4,6 +4,9 @@ import tkinter as tk
 import tkinter.messagebox
 import requests
 import locale
+from datetime import datetime
+from variaveis import *
+from PIL import Image, ImageTk
 # import tkcalendar as cal
 from tkcalendar import Calendar, DateEntry
 try:

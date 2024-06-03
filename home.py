@@ -581,12 +581,75 @@ class ContractData(ctk.CTkFrame):
             self.frame_line_4.grid(row=4, column=1, columnspan=3, padx=20, pady=20, sticky='w')
         else:
             self.frame_line_4.grid_forget()
-            
-    def clear(self):
-        self.link.deselect()
-        self.frame_line_4.grid_forget()
+        
+class RegisterJobSalary(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(master=parent, width=250)
+        self.grid(row=0, column=1, rowspan=3, columnspan=3 ,padx=20, pady=20, sticky='nsew')
+        self.grid_columnconfigure((0,1,2), weight=1)
+        
+        self.home = parent
+        
+        font = ctk.CTkFont(family=FONT, size=20)
+        self.btn_return = ctk.CTkButton(self, text='🔙', command=self.back, font=font, width=80)
+        self.btn_return.grid(row=0, column=0,padx=20, pady=20)
+
+        self.title = ctk.CTkLabel(self, text='Cadastro de Cargos & Salários', width=400, anchor='center', justify='center', font=ctk.CTkFont(size=40))
+        self.title.grid(row=0, column=1, columnspan=2, padx=20, pady=20)
+        
+        self.position = ctk.CTkEntry(self, width=600, placeholder_text='Cargo')
+        self.position.grid(row=1, column=0, columnspan=3, padx=20, pady=20)
+        
+        self.salary = ctk.CTkEntry(self, width=200, placeholder_text='Salário')
+        self.salary.grid(row=2, column=0, padx=20, pady=20)
+        self.bonus = ctk.CTkEntry(self, width=200, placeholder_text='Bônus')
+        self.bonus.grid(row=2, column=1, padx=20, pady=20)
+        self.workload = ctk.CTkEntry(self, width=200, placeholder_text='Carga Horária')
+        self.workload.grid(row=2, column=2, padx=20, pady=20)
         
         
+        self.save = ctk.CTkButton(self, text='Salvar', command=self.save)
+        self.save.grid(row=5, column=0, padx=20, pady=20, sticky='w')
+        
+    def save(self):
+        pass
+    
+    def back(self):
+        self.grid_forget()
+        self.home.tab.grid(row=0, column=1, padx=20, pady=20, sticky='nsew')
+        
+class RegisterForm(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(master=parent, width=250)
+        self.grid(row=0, column=1, rowspan=3, columnspan=3 ,padx=20, pady=20, sticky='nsew')
+        self.grid_columnconfigure((0,1), weight=1)
+        
+        self.home = parent
+        
+        font = ctk.CTkFont(family=FONT, size=20)
+        self.btn_return = ctk.CTkButton(self, text='🔙', command=self.back, font=font, width=80)
+        self.btn_return.grid(row=0, column=0,padx=20, pady=20)
+
+        self.title = ctk.CTkLabel(self, text='Cadastro parâmetros para formulário', width=400, anchor='center', justify='center', font=ctk.CTkFont(size=40))
+        self.title.grid(row=0, column=1, padx=20, pady=20)
+        
+        self.param_name = ctk.CTkEntry(self, width=200, placeholder_text='Parâmetro')
+        self.param_name.grid(row=1, column=0, padx=20, pady=20)
+        param_type = ctk.StringVar(value='entrada')
+        self.param_type = ctk.CTkComboBox(self, width=200, values=['entrada', 'saída', 'ambos'], variable=param_type)
+        self.param_type.grid(row=2, column=0, padx=20, pady=20)
+        self.btn_save = ctk.CTkButton(self, text='Save', command=self.save)
+        
+        
+    def back(self):
+        self.grid_forget()
+        self.home.tab.grid(row=0, column=1, padx=20, pady=20, sticky='nsew')
+        
+    def save(self):
+        pass
+    
+    
+    
 class Footer(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(master=parent, fg_color=DARK_GRAY)
